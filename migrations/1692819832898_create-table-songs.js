@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-exports.shorthands = undefined
+exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.createTable('songs', {
@@ -39,7 +39,9 @@ exports.up = (pgm) => {
       type: 'TEXT',
       notNull: true,
     },
-  })
-}
+  });
+};
 
-exports.down = (pgm) => {}
+exports.down = (pgm) => {
+  pgm.dropTable('songs');
+};
