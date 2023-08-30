@@ -12,7 +12,7 @@ class SongsService {
   async addSong({
     title, year, genre, performer, duration, albumId,
   }) {
-    const id = nanoid(16);
+    const id = `song-${nanoid(16)}`;
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
 
@@ -41,16 +41,11 @@ class SongsService {
   async getSongs(title, performer) {
     let q = 'SELECT "id", "title", "performer" FROM songs';
 
-    if (title && performer) {
-      q = `SELECT "id", "title", "performer" FROM songs WHERE LOWER(title) LIKE '%${title}%' AND LOWER(performer) LIKE '%${performer}%'`;
-    }
+    if (title && performer) q = `SELECT "id", "title", "performer" FROM songs WHERE LOWER(title) LIKE '%${title}%' AND LOWER(performer) LIKE '%${performer}%'`;
 
-    if (title && !performer) {
-      q = `SELECT "id", "title", "performer" FROM songs WHERE LOWER(title) LIKE '%${title}%'`;
-    }
-    if (performer && !title) {
-      q = `SELECT "id", "title", "performer" FROM songs WHERE LOWER(performer) LIKE '%${performer}%'`;
-    }
+    if (title && !performer) q = `SELECT "id", "title", "performer" FROM songs WHERE LOWER(title) LIKE '%${title}%'`;
+
+    if (performer && !title) q = `SELECT "id", "title", "performer" FROM songs WHERE LOWER(performer) LIKE '%${performer}%'`;
 
     const result = await this._pool.query(q);
 
@@ -83,9 +78,7 @@ class SongsService {
 
     const result = await this._pool.query(q);
 
-    if (!result.rows.length) {
-      throw new NotFoundError('Gagal memperbarui lagu. Id tidak ditemukan');
-    }
+    if (!result.rows.length) throw new NotFoundError('Gagal memperbarui lagu. Id tidak ditemukan');
   }
 
   async deleteSongById(id) {
@@ -96,9 +89,7 @@ class SongsService {
 
     const result = await this._pool.query(q);
 
-    if (!result.rows.length) {
-      throw new NotFoundError('Lagu gagal dihapus. Id tidak ditemukan');
-    }
+    if (!result.rows.length) throw new NotFoundError('Lagu gagal dihapus. Id tidak ditemukan');
   }
 }
 
