@@ -3,7 +3,6 @@ const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
 const AuthorizationError = require('../../exceptions/AuthorizationError');
 const NotFoundError = require('../../exceptions/NotFoundError');
-// const { mapDBToModel } = require('../../utils/playlists');
 
 class PlaylistSongsService {
   constructor() {

@@ -72,7 +72,10 @@ class PlaylistsService {
 
   async getSongsInPlaylists(id) {
     const q = {
-      text: 'SELECT songs.id, songs.title, songs.performer, playlists.id, playlists.name, playlists.owner FROM playlist_songs JOIN playlists ON playlist_songs.playlist_id = playlists.id JOIN songs ON playlist_songs.song_id = songs.id WHERE playlist_songs.id = $1',
+      text: `SELECT songs.id, songs.title, songs.performer, playlists.id, playlists.name, playlists.owner FROM playlist_songs
+      JOIN playlists ON playlist_songs.playlist_id = playlists.id
+      JOIN songs ON playlist_songs.song_id = songs.id
+      WHERE playlist_songs.id = $1`,
       values: [id],
     };
 
